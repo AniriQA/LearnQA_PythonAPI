@@ -1,4 +1,3 @@
-
 import requests
 from lxml import html
 
@@ -12,20 +11,15 @@ passwords = tree.xpath(locator)
 for password in passwords:
     password = str(password).strip()
     print(password)
-
-
-list=str(password).strip()
-for el in list:
-    payload = {"login": "super_admin", "password": list}
+    payload = {"login": "super_admin", "password": password}
     response1 = requests.post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework", data=payload)
     print(dict(response1.cookies))
     cookie_value=response1.cookies.get('auth_cookie')
     cookies = {'auth_cookie': cookie_value}
     response2 = requests.post("https://playground.learnqa.ru/ajax/api/check_auth_cookie", cookies=cookies)
     print(response2.text)
-else:
-    print(password)
-
+    if response2.text!='You are NOT authorized':
+        print("XXX")
 
 
 
