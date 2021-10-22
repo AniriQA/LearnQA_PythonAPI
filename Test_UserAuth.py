@@ -13,11 +13,11 @@ class TestUserAuth:
         assert "user_id" in response1.json(), "Нет user ID"
 
         auth_sid = response1.cookies.get("auth_sid")
-        token = response1.headers.get("x_csrf_token")
+        token = response1.headers.get("x-csrf-token")
         user_id_from_auth_metod = response1.json()['user_id']
 
         response2 = requests.get("https://playground.learnqa.ru/api/user/auth",
-                                 headers={"x_csrf_token": token},
+                                 headers={"x-csrf-token": token},
                                  cookies={"auth_sid": auth_sid})
         assert "user_id" in response2.json(), "user id не обнаружен во втором запросе"
         user_id_from_check_metod = response2.json()['user_id']
