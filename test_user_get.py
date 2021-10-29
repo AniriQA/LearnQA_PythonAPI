@@ -5,10 +5,11 @@ from lib.assertions import Assertions
 class TestUserGet(BaseCase):
     def  test_get_user_details_not_auth(self):
         response = requests.get("https://playground.learnqa.ru/api/user/2")
+        print(response.content)
         Assertions.assert_json_has_key(response, "username")
-        Assertions.assert_json_has_not_key(response, 'email')
-        Assertions.assert_json_has_not_key(response, 'firstName')
-        Assertions.assert_json_has_not_key(response, 'lastName')
+        Assertions.assert_json_has_not_key(response, "email")
+        Assertions.assert_json_has_not_key(response, "firstName")
+        Assertions.assert_json_has_not_key(response, "lastName")
 
     def test_get_user_details_auth_as_same_user(self):
         data = {
@@ -24,10 +25,6 @@ class TestUserGet(BaseCase):
         expected_fields = ['username', 'email', 'firstName', 'lastname']
         Assertions.assert_json_has_keys(response1, expected_fields)
 
-        response2 = requests.get(
-            f"https://playground.learnqa.ru/api/user/{user_id_from_auth_metod}",
-            headers = {"x-csrf-token": token},
-            cookies = {"auth_sid": auth_sid}
-        )
+        response2 = requests.get(f"https://playground.learnqa.ru/api/user/{user_id_from_auth_method}", headers = {"x-csrf-token": token},cookies = {"auth_sid": auth_sid})
         expected_fields = ['username','email','firstName','lastname']
         Assertions.assert_json_has_keys(response2, expected_fields)
