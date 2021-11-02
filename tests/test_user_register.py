@@ -4,6 +4,8 @@ from lib.my_requests import MyRequests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from datetime import datetime
+import allure
+
 class TestUserRegister(BaseCase):
     def setup(self):
         base_part = 'learnqa'
@@ -40,6 +42,7 @@ class TestUserRegister(BaseCase):
         print(response.content)
         Assertions.assert_code_status(response,400)
 
+    @allure.step
     def test_create_user_with_existing_email(self):
         email = "vinkotov@example.com"
         data = {'password': '123', 'username': "pytest конструирует строку, которая является идентификатором (ID) теста для каждого множества значений параметризованного теста. Эти индентификаторы можно использовать с опцией -k, чтобы отборать для выполнения определенные тесты, и они же идентифицируют конкретный упавший тест. Запустив pytest --collect-only , можно посмотреть сгенерированные ID.", 'firstName': "learnqa", 'lastName': "learnqa", 'email': email}

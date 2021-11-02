@@ -3,6 +3,7 @@ from lib.base_case import BaseCase
 from lib.assertions import Assertions
 
 
+
 class TestUserDelete(BaseCase):
 
     def test_delete_undeleteble_user(self):
